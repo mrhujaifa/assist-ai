@@ -2,7 +2,7 @@
 // modules/auth/hooks/useVerifyOtp.ts
 
 import { useState } from "react";
-import { authApi } from "../auth.api";
+import { authApi } from "../api/auth.api";
 
 export const useAuthActions = () => {
   const [loading, setLoading] = useState(false);

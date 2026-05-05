@@ -1,5 +1,5 @@
-import { supabase } from "../../lib/superbase";
-import type { LoginPayload, SignupPayload } from "./auth.types";
+import { supabase } from "../../../lib/superbase";
+import type { LoginPayload, SignupPayload } from "../types/auth.types";
 
 export const authApi = {
   signup: (payload: SignupPayload) => {

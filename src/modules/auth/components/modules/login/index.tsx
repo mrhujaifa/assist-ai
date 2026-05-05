@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
-import { authApi } from "../../../auth.api";
+import { authApi } from "../../../api/auth.api";
 
 export default function LoginIndexUI() {
   const navigate = useNavigate();
