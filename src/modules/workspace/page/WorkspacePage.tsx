@@ -1,11 +1,11 @@
+import Chat from "../../chat";
 import DashboardLayout from "../components/DashboardLayout";
-import Task from "../components/test";
 
 const WorkspacePage = () => {
   return (
     <div>
       <DashboardLayout>
-        <Task></Task>
+        <Chat />
       </DashboardLayout>
     </div>
   );

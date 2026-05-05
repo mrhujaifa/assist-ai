@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "sonner";
 import { useAuth } from "../../auth/hooks/useAuth";
-import { LogIn } from "lucide-react"; // আইকন ব্যবহারের জন্য
+import { LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface IProfileFooterProps {

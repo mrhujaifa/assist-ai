@@ -7,19 +7,17 @@ interface DashboardNavbarProps {
   setIsMobileOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isExpanded: boolean;
-  activePageName: string;
 }
 
 const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
   setIsMobileOpen,
   setIsExpanded,
   isExpanded,
-  activePageName,
 }) => {
   const { loading, isAuthenticated } = useAuth();
 
   return (
-    <header className="navbar h-14 border-b border-base-300 bg-base-100/80 backdrop-blur-md sticky top-0 z-30 px-4 flex justify-between items-center">
+    <header className="navbar h-14 w-full border-b border-base-300 bg-base-100/80 backdrop-blur-md  z-30 px-4 flex justify-between lg: items-center">
       <div className="flex items-center gap-3">
         {/* Mobile Menu Button */}
         <button
@@ -58,10 +56,6 @@ const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
             <path d="M11 17l-5-5 5-5M18 17l-5-5 5-5" />
           </svg>
         </button>
-
-        <span className="text-sm font-semibold text-base-content/70 truncate">
-          {activePageName}
-        </span>
       </div>
 
       {/* Right Side - Conditional Rendering */}
@@ -83,12 +77,12 @@ const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
         ) : (
           <>
             <Link to={"/auth/login"}>
-              <button className="bg-[#3c46ff] text-white rounded-md py-1 px-4 text-sm hover:bg-[#343dcc] transition-colors">
+              <button className="bg-[#3c46ffd2] text-white rounded-md py-1 px-4 text-sm hover:bg-[#343dcc] transition-colors ">
                 Login
               </button>
             </Link>
             <Link to={"/auth/register"}>
-              <button className="bg-[#3c46ff] text-white rounded-md py-1 px-4 text-sm hover:bg-[#343dcc] transition-colors">
+              <button className="bg-[#3c46ffd8] text-white rounded-md py-1 px-4 text-sm hover:bg-[#343dcc] transition-colors">
                 Sign Up
               </button>
             </Link>

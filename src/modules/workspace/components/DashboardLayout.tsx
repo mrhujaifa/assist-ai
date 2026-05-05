@@ -4,6 +4,7 @@ import DashboardNavbar from "./DashboardNavbar";
 import { useAuth } from "../../auth/hooks/useAuth";
 import DashboardSidebarProfileFooter from "./DashboardSidebarProfileFooter";
 import { NAVIGATION_ITEMS } from "../constant/NavItems";
+import DashboardChatHistory from "./DashboardChatHistory";
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -17,17 +18,6 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     setIsMobileOpen(false);
   }, [location.pathname]);
-
-  const activePageName =
-    NAVIGATION_ITEMS.find((item) => item.path === location.pathname)?.name ||
-    "Dashboard";
-
-  const getLinkClass = (isActive: boolean) =>
-    `flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200 group ${
-      isActive
-        ? "bg-base-200 font-medium text-primary"
-        : "text-base-content/70 hover:bg-base-200 hover:text-base-content"
-    }`;
 
   return (
     <div className="flex min-h-screen bg-base-100 overflow-hidden relative">
@@ -72,7 +62,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
                 <NavLink
                   to={item.path}
                   title={!isExpanded ? item.name : ""}
-                  className={({ isActive }) => getLinkClass(isActive)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200 group hover:bg-blue-500 hover:text-white hover:shadow-lg"
                 >
                   <span className="flex-shrink-0">{item.icon}</span>
                   <span
@@ -84,6 +74,8 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
               </li>
             ))}
           </ul>
+
+          <DashboardChatHistory isExpanded={isExpanded} userId={user?.id} />
         </nav>
 
         {/* Profile Footer */}
@@ -98,7 +90,6 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
       >
         {/* Navbar */}
         <DashboardNavbar
-          activePageName={activePageName}
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
           setIsMobileOpen={setIsMobileOpen}

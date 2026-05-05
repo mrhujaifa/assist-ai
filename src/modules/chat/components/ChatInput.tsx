@@ -1,48 +1,71 @@
-import { useState } from "react";
-import { Plus, Mic, AudioLines } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { AudioLines, Mic, Plus, SendHorizontal } from "lucide-react";
 
-const ChatInputUI = () => {
+type ChatInputUIProps = {
+  loading: boolean;
+  onSend: (message: string) => Promise<void>;
+};
+
+const ChatInputUI = ({ loading, onSend }: ChatInputUIProps) => {
   const [inputValue, setInputValue] = useState("");
+  const canSend = inputValue.trim().length > 0 && !loading;
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const message = inputValue.trim();
+
+    if (!message || loading) return;
+
+    setInputValue("");
+    await onSend(message);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[200px] w-full bg-[#171717] p-4">
-      {/* Main Container */}
-      <div className="relative flex items-center w-full max-w-3xl group">
-        {/* Input Wrapper */}
-        <div className="flex items-center w-full bg-[#2f2f2f] hover:bg-[#383838] transition-colors duration-200 rounded-full px-4 py-2 shadow-lg border border-white/5">
-          {/* Plus Icon (Add/Upload) */}
-          <button className="p-2 text-zinc-400 hover:text-white transition-colors">
-            <Plus size={20} strokeWidth={2.5} />
-          </button>
+    <div className="fixed bottom-0 left-0 right-0 flex flex-col items-center p-4 pb-6">
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-full max-w-3xl items-center rounded-full border border-white/5 px-4 py-2 shadow-2xl"
+      >
+        <button
+          aria-label="Add attachment"
+          className="p-2 text-zinc-400 hover:text-white"
+          type="button"
+        >
+          <Plus size={20} />
+        </button>
 
-          {/* Text Input */}
-          <input
-            type="text"
-            placeholder="Ask anything"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="flex-1 bg-transparent border-none outline-none text-zinc-100 placeholder-zinc-500 px-3 py-2 text-[16px]"
-          />
+        <input
+          className="flex-1 bg-transparent px-3 py-2 text-[16px] text-zinc-100 placeholder-zinc-500 outline-none"
+          disabled={loading}
+          onChange={(event) => setInputValue(event.target.value)}
+          placeholder="Ask AssistAI"
+          type="text"
+          value={inputValue}
+        />
 
-          {/* Mic Icon */}
-          <button className="p-2 text-zinc-400 hover:text-white transition-colors mr-1">
-            <Mic size={20} />
-          </button>
+        <button
+          aria-label="Use microphone"
+          className="p-2 text-zinc-400 hover:text-white"
+          type="button"
+        >
+          <Mic size={20} />
+        </button>
 
-          {/* Voice/Wave Action Button */}
-          <button className="bg-white p-2 rounded-full text-black hover:bg-zinc-200 transition-all active:scale-95 shadow-md">
-            <AudioLines size={20} strokeWidth={2.5} />
-          </button>
-        </div>
-      </div>
+        <button
+          aria-label={canSend ? "Send message" : "Voice mode"}
+          className={`rounded-full p-2 transition-all ${
+            canSend ? "bg-white text-black" : "bg-[#676767] text-zinc-300"
+          }`}
+          disabled={loading}
+          type="submit"
+        >
+          {canSend ? <SendHorizontal size={20} /> : <AudioLines size={20} />}
+        </button>
+      </form>
 
-      {/* Footer Text */}
-      <p className="mt-4 text-[12px] text-zinc-500">
-        ChatGPT can make mistakes. Check important info.{" "}
-        <span className="underline cursor-pointer hover:text-zinc-400">
-          Cookie Preferences
-        </span>
-        .
+      <p className="mt-3 hidden text-center text-[12px] text-zinc-500 lg:block">
+        Assist AI can make mistakes. Check important info.
       </p>
     </div>
   );
